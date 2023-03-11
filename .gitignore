@@ -1,0 +1,12 @@
+.vscode
+.idea
+./articles/migrations/__pycache__
+./articles/templatetags/__pycache__
+./articles/__pycache__
+./blog/__pycache__
+./extra_apps/DjangoUeditor/__pycache__
+./extra_apps/xadmin/migrations/__pycache__
+./extra_apps/xadmin/plugins/__pycache__
+./extra_apps/xadmin/templatetags/__pycache__
+./extra_apps/xadmin/views/__pycache__
+./extra_apps/xadmin/__pycache__

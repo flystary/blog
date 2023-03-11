@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load banner_filter %}
+{% block content %}
+<div class="main-container">
+    <main class="site-main">
+        <!-- Page Content -->
+        <div class="container-fluid no-left-padding no-right-padding page-content blog-paralle-post">
+            <!-- Container -->
+            <div class="container">
+                <!-- Row -->
+                <div class="row">
+                    <!-- Content Area -->
+                    <div class="col-lg-8 col-md-6 content-area">
+                        <!-- Row -->
+                        <div class="row">
+                            {% for article in list_articles.object_list %}
+                                <div class="col-12 col-md-12 col-sm-6 blog-paralle">
+                                    <div class="type-post">
+                                        <div class="entry-cover">
+                                            <div class="post-meta">
+                                                <span class="byline">by <a href="{% url 'article' article.id %}"
+                                                                           title="Indesign">{{ info.name }}</a></span>
+                                                <span class="post-date"><a
+                                                        href="{% url 'article' article.id %}">{{ article.add_time }}</a></span>
+                                            </div>
+                                            <a href="{% url 'article' article.id %}"><img
+                                                    src="{{ MEDIA_URL }}{{ article.img }}" alt="Post"/></a>
+                                        </div>
+                                        <div class="entry-content">
+                                            <div class="entry-header">
+                                            <span class="post-category"><a
+                                                    href="{% url 'categories' article.categorie_id %}"
+                                                    title="{{ article.categorie }}">{{ article.categorie }}</a></span>
+                                                <h3 class="entry-title"><a href="{% url 'article' article.id %}"
+                                                                           title="{{ article.title }}">{{ article.title }}</a>
+                                                </h3>
+                                            </div>
+                                            <p>{{ article.info }}</p>
+                                            <a href="{% url 'article' article.id %}" title="Read More">Read More</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            {% endfor %}
+
+                        </div><!-- Row /- -->
+                        <!-- 分页器 start -->
+                        <nav class="navigation pagination">
+                            <h2 class="screen-reader-text">Posts navigation</h2>
+                            <div class="nav-links">
+                                {% if list_articles.has_previous %}
+                                    <a class="prev page-numbers"
+                                       href="?{{ list_articles.previous_page_number.querystring }}">Previous</a>
+                                {% else %}
+                                    <a class="prev page-numbers"
+                                       href="#" onclick="return false">Previous</a>
+                                {% endif %}
+
+                                {% for page in list_articles.pages %}
+                                    {% if page %}
+                                        {% ifequal page list_articles.number %}
+                                            <span class="page-numbers current"><span
+                                                    class="meta-nav screen-reader-text">Page </span>{{ page }}</span>
+                                        {% else %}
+                                            <a class="page-numbers" href="?{{ page.querystring }}"><span
+                                                    class="meta-nav screen-reader-text">Page </span>{{ page }}</a>
+                                        {% endifequal %}
+                                    {% else %}
+                                        <a class="prev page-numbers" href="#" onclick="return false">...</a>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if list_articles.has_next %}
+                                    <a class="next page-numbers"
+                                       href="?{{ list_articles.next_page_number.querystring }}">Next</a>
+                                {% else %}
+                                    <a class="next page-numbers" href="#" onclick="return false">Next</a>
+
+                                {% endif %}
+                            </div>
+                        </nav><!-- 分页器 end /- -->
+                    </div><!-- Content Area -->
+                    <!-- Widget Area -->
+                    <div class="col-lg-4 col-md-6 widget-area">
+                        <!-- Widget : Latest Post -->
+                        <aside class="widget widget_latestposts">
+                            <h3 class="widget-title">Popular Posts</h3>
+                            {% for article in popular_articles %}
+                                <div class="latest-content">
+                                    <a href="{% url 'article' article.id %}" title="Recent Posts"><i>
+                                        <img src="{{ MEDIA_URL }}{{ article.img }}" class="wp-post-image" alt="blog-1"
+                                             style="height: 80px;width: 100px"/></i></a>
+                                    <h5><a title="Beautiful Landscape View of Rio de Janeiro"
+                                           href="{% url 'article' article.id %}">{{ article.title }}</a></h5>
+                                    <span><a href="{% url 'article' article.id %}">{{ article.add_time }}</a></span>
+                                </div>
+                            {% endfor %}
+
+                        </aside><!-- Widget : Latest Post /- -->
+                        <!-- Widget : Categories -->
+                        <aside class="widget widget_categories text-center">
+                            <h3 class="widget-title">Categories</h3>
+                            <ul>
+                                {% for category in categories %}
+                                    <li><a href="{% url 'categories' category.id %}"
+                                           title="Nature">{{ category.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </aside><!-- Widget : Categories /- -->
+                    </div><!-- Widget Area /- -->
+                </div><!-- Row /- -->
+            </div><!-- Container /- -->
+        </div><!-- Page Content /- -->
+
+    </main>
+
+</div>
+{% endblock %}

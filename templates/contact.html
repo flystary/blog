@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load banner_filter %}
+{% block content %}
+    <div class="main-container">
+
+        <main class="site-main">
+            <!-- Contact-Us Section -->
+            <div class="container-fluid no-left-padding no-right-padding contact-section">
+            </div>
+            <!-- Page Content -->
+            <div class="container-fluid no-left-padding no-right-padding page-content">
+                <!-- Container -->
+                <div class="container">
+                    <div class="contact-info">
+
+                        <div id="container" style="width: 1170px;height: 500px">地图</div>
+
+                        {#                    <img src="http://via.placeholder.com/1170x500" alt="contact">#}
+
+
+                        <div class="block-title">
+                            <h3>Contact Me</h3>
+                        </div>
+                        <p>These cases are perfectly simple and easy to distinguish. In a free hour, when our power of
+                            choice is untrammelled and when nothing prevents our being able to do what we like best,
+                            every
+                            pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to
+                            the
+                            claims of duty or the obligations of business it will frequently occur that pleasures have
+                            to be
+                            repudiated and annoyances accepted.</p>
+                        <P>电话： {{ info.phone }}</P>
+                        <P>邮箱: {{ info.email }}</P>
+                        <P>地址: {{ info.address }}</P>
+                    </div>
+                    <div class="contact-form">
+                        <form class="row" id="jsStayForm">
+                            <div class="col-md-6 form-group">
+                                <input type="text" class="form-control" placeholder="Your Name (required)"
+                                       name="name" id="input_name" required>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <input type="text" class="form-control" placeholder="Your Email (required)"
+                                       name="email" id="input_email" required>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <input type="text" class="form-control" placeholder="Subject" name="subject"
+                                       id="input_subject">
+                            </div>
+                            <div class="col-md-12 form-group">
+                            <textarea class="form-control" placeholder="Your message..." rows="5"
+                                      name="message" id="textarea_message"></textarea>
+                            </div>
+                            <div class="col-md-12 form-group no-bottom-margin">
+                                <button id="sendmsg" name="submit" class="submit">Send</button>
+                            </div>
+                            <div id="alert-msg" class="alert-msg"></div>
+                            {% csrf_token %}
+                        </form>
+                    </div>
+                </div><!-- Container /- -->
+            </div><!-- Page Content /- -->
+        </main>
+    </div>
+
+
+{#    使用高德地图插件，请换成自己的key#}
+    <script type="text/javascript"
+            src="https://webapi.amap.com/maps?v=1.4.14&key=a6a80a41a8543e348e6497b1bd0e7821"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <script>
+        var address = {{ address|safe }};
+        var city = {{ city|safe }};
+        AMap.plugin('AMap.Geocoder', function () {
+            var geocoder = new AMap.Geocoder({
+                // city 指定进行编码查询的城市，支持传入城市名、adcode 和 citycode
+                city: city,
+            });
+
+            geocoder.getLocation(address, function (status, result) {
+                var lnglat;
+                if (status === 'complete' && result.info === 'OK') {
+                    lnglat = result.geocodes[0].location;
+                } else {
+                    lnglat = [116.397428, 39.90923]
+                }
+                var map = new AMap.Map('container', {
+                    zoom: 11,//级别
+                    center: lnglat,//中心点坐标
+                    viewMode: '3D'//使用3D视图
+                });
+                marker = new AMap.Marker({});
+                marker.setMap(map);
+            })
+        });
+
+        $(function () {
+            $('#sendmsg').on('click', function () {
+                $.ajax({
+                    cache: false,
+                    type: "POST",
+                    url: "{% url 'msg' %}",
+                    data: $('#jsStayForm').serialize(),
+                    async: true,
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            $('#jsStayForm')[0].reset();
+                            alert("提交成功");
+                        } else if (data.status == 'fail') {
+                            alert("提交失败:" + data.msg);
+                        }
+                    },
+                });
+                return false
+            });
+        })
+
+
+    </script>
+{% endblock %}

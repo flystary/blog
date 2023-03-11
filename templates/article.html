@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load banner_filter %}
+{% block content %}
+    <div class="main-container">
+
+        <main class="site-main">
+
+            <!-- Page Content -->
+            <div class="container-fluid no-left-padding no-right-padding page-content blog-single">
+                <!-- Container -->
+                <div class="container">
+                    <div class="row">
+                        <!-- Content Area -->
+                        <div class="col-xl-8 col-lg-8 col-md-6 col-12 content-area">
+                            <article class="type-post">
+                                <div class="entry-cover">
+                                    <img src="{{ MEDIA_URL }}{{ article.img }}" alt="Post"/>
+                                </div>
+                                <div class="entry-content">
+                                    <div class="entry-header">
+                                        <span class="post-category"><a
+                                                href="{% url 'categories' article.categorie_id %}"
+                                                title="{{ article.categorie.name }}">{{ article.categorie.name }}</a></span>
+                                        <h3 class="entry-title">{{ article.title }}</h3>
+                                        <div class="post-meta">
+                                            <p style="color: grey;display: inline-block">
+                                                <i class="fa fa-user" aria-hidden="true"></i>
+                                                {{ info.name }}</p>
+                                            <p style="color: grey;display: inline-block;margin-left: 10px">
+                                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                {{ article.add_time }}</p>
+                                            <p style="color: grey;display: inline-block;margin-left: 10px">
+                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                                {{ article.click_nums }}</p>
+{#                                            <p style="color: grey;display: inline-block;margin-left: 10px">#}
+{#                                                <i class="fa fa-commenting-o" aria-hidden="true"></i>#}
+{#                                                {{ article.comment_nums }}</p>#}
+                                            <p style="color: grey;display: inline-block;margin-left: 10px;cursor:pointer;"
+                                               id="addfav">
+                                                <i class="fa fa-heart" aria-hidden="true"></i>
+                                                <span id="favnums">{{ article.fav_nums }}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {{ article.content|safe }}
+
+                                    <div class="entry-footer">
+                                        <div class="tags">
+                                            {% for tag in tags %}
+                                                <a href="#" title="{{ tag.name }}"
+                                                   onclick="return false"># {{ tag.name }}</a>
+                                            {% endfor %}
+                                        </div>
+                                        <ul class="social">
+                                            <li><a href="#" title="Facebook" onclick="return false"><i
+                                                    class="fa fa-facebook"></i></a></li>
+                                            <li><a href="#" title="Twitter" onclick="return false"><i
+                                                    class="fa fa-twitter"></i></a></li>
+                                            <li><a href="#" title="Pinterest" onclick="return false"><i
+                                                    class="fa fa-pinterest-p"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </article>
+
+
+                            <!-- 读者评论 Area -->
+                            <div class="comments-area">
+                                {#                            <div id="SOHUCS" sid={{ article.id }}></div>#}
+                                {#                            <script charset="utf-8" type="text/javascript"#}
+                                {#                                    src="https://changyan.sohu.com/upload/changyan.js"></script>#}
+                                {#                            <script type="text/javascript">#}
+                                {#                                window.changyan.api.config({#}
+                                {#                                    appid: '*******',#}
+                                {#                                    conf: '********'#}
+                                {#                                });#}
+                                {#                            </script>#}
+                                <ol class="comment-list">
+                                    <li class="comment byuser comment-author-admin bypostauthor even thread-even depth-1 parent">
+                                        <div class="comment-body">
+                                            <footer class="comment-meta">
+                                                <div class="comment-author vcard">
+                                                    <img alt="img" src="{% static 'imgs/uer1.jpeg' %}"
+                                                         class="avatar avatar-72 photo"
+                                                         style="width: 70px;height: 70px"/>
+                                                    <b class="fn">Alice Chaptman</b>
+                                                </div>
+                                                <div class="comment-metadata">
+                                                    <a href="#" onclick="return false">10 hours ago</a>
+                                                </div>
+                                            </footer>
+                                            <div class="comment-content">
+                                                <p>👍👍👍👍👍👍</p>
+                                            </div>
+                                            <div class="reply">
+                                                <a rel="nofollow" class="comment-reply-link" href="#" title="Reply"
+                                                   onclick="return false">Reply</a>
+                                            </div>
+                                        </div>
+                                        <ol class="children">
+                                            <li class="comment byuser comment-author-admin bypostauthor odd alt depth-2 parent">
+                                                <div class="comment-body">
+                                                    <footer class="comment-meta">
+                                                        <div class="comment-author vcard">
+                                                            <img alt="img" src="{% static 'imgs/user2.jpeg' %}"
+                                                                 class="avatar avatar-72 photo"
+                                                                 style="width: 70px;height: 70px"/>
+                                                            <b class="fn">Droid Vader</b>
+                                                        </div>
+                                                        <div class="comment-metadata">
+                                                            <a href="#" onclick="return false">8 hours ago</a>
+                                                        </div>
+                                                    </footer>
+                                                    <div class="comment-content">
+                                                        <p>！！！</p>
+                                                    </div>
+                                                    <div class="reply">
+                                                        <a rel="nofollow" class="comment-reply-link" href="#"
+                                                           title="Reply" onclick="return false">Reply</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ol>
+                                    </li>
+                                    <li class="comment byuser comment-author-admin bypostauthor even thread-odd thread-alt depth-1">
+                                        <div class="comment-body">
+                                            <footer class="comment-meta">
+                                                <div class="comment-author vcard">
+                                                    <img alt="img" src="{% static 'imgs/use3.jpeg' %}"
+                                                         class="avatar avatar-72 photo"
+                                                         style="width: 70px;height: 70px"/>
+                                                    <b class="fn">Giana Blankard</b>
+                                                </div>
+                                                <div class="comment-metadata">
+                                                    <a href="#" onclick="return false">16 hours ago</a>
+                                                </div>
+                                            </footer>
+                                            <div class="comment-content">
+                                                <p>blog</p>
+                                            </div>
+                                            <div class="reply">
+                                                <a rel="nofollow" class="comment-reply-link" href="#" title="Reply"
+                                                   onclick="return false">Reply</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ol><!-- comment-list /- -->
+                            </div><!-- Comment Area /- -->
+                        </div><!-- Content Area /- -->
+
+                        <!-- Widget Area -->
+                        <div class="col-lg-4 col-md-6 widget-area">
+                            <!-- Widget : Latest Post -->
+                            <aside class="widget widget_latestposts">
+                                <h3 class="widget-title">Popular Posts</h3>
+                                {% for article in popular_articles %}
+                                    <div class="latest-content">
+                                        <a href="{% url 'article' article.id %}" title="Recent Posts"><i>
+                                            <img src="{{ MEDIA_URL }}{{ article.img }}" class="wp-post-image"
+                                                 alt="blog-1"
+                                                 style="height: 80px;width: 100px"/></i></a>
+                                        <h5><a title="Beautiful Landscape View of Rio de Janeiro"
+                                               href="{% url 'article' article.id %}">{{ article.title }}</a></h5>
+                                        <span><a href="{% url 'article' article.id %}">{{ article.add_time }}</a></span>
+                                    </div>
+                                {% endfor %}
+
+                            </aside><!-- Widget : Latest Post /- -->
+                            <!-- Widget : Categories -->
+                            <aside class="widget widget_categories text-center">
+                                <h3 class="widget-title">Categories</h3>
+                                <ul>
+                                    {% for category in categories %}
+                                        <li><a href="{% url 'categories' category.id %}"
+                                               title="Nature">{{ category.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </aside><!-- Widget : Categories /- -->
+                        </div><!-- Widget Area /- -->
+                    </div><!-- Row /- -->
+                </div><!-- Container /- -->
+            </div><!-- Page Content /- -->
+
+        </main>
+
+    </div>
+    <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <script>
+        $(function () {
+            $('#addfav').click(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '{% url "addfav" article.id %}',
+                    data: {'pk':{{article.id}}},
+                    dataType: 'json',
+                    processData: false,  // 告诉jquery不转换数据
+                    contentType: false,  // 告诉jquery不设置内容格式
+                    success: function (data) {
+                        if (data.status === 'success') {
+                            $("#favnums").html(parseInt($("#favnums").html()) + 1);
+                        }
+                        else {
+                            alert('点赞失败!');
+                        }
+                    }
+                });
+
+            });
+        });
+    </script>
+{% endblock %}

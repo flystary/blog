@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load banner_filter %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="{% static '/imgs/favicon.ico' %}"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{{ info.name }}</title>
+    <!-- Library -->
+    <link href="{% static '/css/lib.css' %}" rel="stylesheet">
+    <!-- Custom - Common CSS -->
+    <link rel="stylesheet" href="{% static '/css/rtl.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}">
+    <link rel="stylesheet" href="{% static '/css/font-awesome.min.css' %}">
+
+
+    <!--[if lt IE 9]>
+		<script src="js/html5/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body data-offset="200" data-spy="scroll" data-target=".ownavigation">
+<!-- Loader -->
+<div id="site-loader" class="load-complete">
+    <div class="loader">
+        <div class="line-scale">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div><!-- Loader /- -->
+
+<!-- Header Section -->
+<header class="container-fluid no-left-padding no-right-padding header_s header-fix header_s7">
+    <!-- SidePanel -->
+    <div id="slidepanel-1" class="slidepanel">
+        <!-- Top Header -->
+        <div class="container-fluid no-right-padding no-left-padding top-header">
+            <!-- Container -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-6">
+                        <ul class="top-social">
+                            <li><a href="#" title="Facebook" onclick="return false"><i
+                                    class="ion-social-facebook-outline"></i></a></li>
+                            <li><a href="#" title="Twitter" onclick="return false"><i
+                                    class="ion-social-twitter-outline"></i></a></li>
+                            <li><a href="#" title="Instagram" onclick="return false"><i
+                                    class="ion-social-instagram-outline"></i></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-4 logo-block">
+                        <a href="{% url 'index' %}" title="Logo">{{ info.name }}</a>
+                    </div>
+                    <div class="col-lg-4 col-6">
+                        <ul class="top-right user-info">
+                            <li><a href="#search-box" data-toggle="collapse" class="search collapsed" title="Search"><i
+                                    class="pe-7s-search sr-ic-open"></i><i class="pe-7s-close sr-ic-close"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div><!-- Container /- -->
+        </div><!-- Top Header /- -->
+    </div><!-- SidePanel /- -->
+
+    <!-- Container -->
+    <div class="container">
+        <!-- Menu Block -->
+        <div class="container-fluid no-left-padding no-right-padding menu-block">
+            <nav class="navbar ownavigation navbar-expand-lg">
+                <a class="navbar-brand" href="{% url 'index' %}">{{ info.name }}</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                        data-target="#navbar7" aria-controls="navbar7" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbar7">
+                    <ul class="navbar-nav">
+                        <li class="dropdown">
+                            <a class="nav-link" title="Home" href="{% url 'index' %}">首 页</a>
+                        </li>
+                        {% for category in categories %}
+                            <li><a class="nav-link" title="Contact"
+                                   href="{% url 'categories' category.id %}">{{ category.name }}</a></li>
+                        {% endfor %}
+                        <li><a class="nav-link" title="Contact" href="{% url 'contact' %}">联系我</a></li>
+
+                    </ul>
+                </div>
+                <div id="loginpanel-1" class="desktop-hide">
+                    <div class="right toggle" id="toggle-1">
+                        <a id="slideit-1" class="slideit" href="#slidepanel"><i class="fo-icons fa fa-inbox"></i></a>
+                        <a id="closeit-1" class="closeit" href="#slidepanel"><i class="fo-icons fa fa-close"></i></a>
+                    </div>
+                </div>
+            </nav>
+        </div><!-- Menu Block /- -->
+    </div><!-- Container /- -->
+    <!-- Search Box -->
+    <div class="search-box collapse" id="search-box">
+        <div class="container">
+            <form method="get" action="{% url 'search' %}">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="keyword" placeholder="Search..." required>
+                    <span class="input-group-btn">
+							<button class="btn btn-secondary" type="submit"><i class="pe-7s-search"></i></button>
+						</span>
+                </div>
+            </form>
+        </div>
+    </div><!-- Search Box /- -->
+</header><!-- Header Section /- -->
+
+{% block content %}
+
+{% endblock %}
+<!-- Footer Main -->
+<footer class="container-fluid no-left-padding no-right-padding footer-main">
+    <!-- Instagram -->
+    <div class="container-fluid no-left-padding no-right-padding instagram-block">
+        <ul class="instagram-carousel">
+            {% for article in banner_arts %}
+                <li><a href="{% url 'article' article.id %}"><img src="{{ MEDIA_URL }}{{ article.img }}"
+                                                                  alt="{{ article.title }}"
+                                                                  style="width:215px;height: 216px;padding-right: 5px"/></a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div><!-- Instagram /- -->
+    <!-- Container -->
+    <div class="container">
+        <ul class="ftr-social">
+            <li><a href="#" title="Facebook" onclick="return false"><i class="fa fa-facebook"></i>Facebook</a></li>
+            <li><a href="#" title="Twitter" onclick="return false"><i class="fa fa-twitter"></i>twitter</a></li>
+            <li><a href="#" title="Instagram" onclick="return false"><i class="fa fa-instagram"></i>Instagram</a></li>
+            <li><a href="#" title="Google Plus" onclick="return false"><i class="fa fa-google-plus"></i>Google plus</a>
+            </li>
+            <li><a href="#" title="Pinterest" onclick="return false"><i class="fa fa-pinterest-p"></i>pinterest</a></li>
+            <li><a href="#" title="Youtube" onclick="return false"><i class="fa fa-youtube"></i>youtube</a></li>
+        </ul>
+        <div class="copyright">
+            <p>Copyright @ 2018 {{ info.name }}</p>
+        </div>
+    </div><!-- Container /- -->
+</footer><!-- Footer Main /- -->
+
+<!-- JQuery v1.12.4 -->
+<script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+
+<!-- Library - Js -->
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/lib.js' %}"></script>
+
+<!-- Library - Theme JS -->
+<script src="{% static 'js/functions.js' %}"></script>
+
+</body>
+</html>
